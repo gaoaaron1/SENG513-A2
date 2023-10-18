@@ -21,7 +21,7 @@ class Entity {
     }
 
     draw() {
-        c.fillStyle = 'red';
+        //c.fillStyle = 'red';
         c.fillRect(this.position.x, this.position.y, 50, this.height);
     }
 
@@ -80,6 +80,7 @@ const keys = {
     }
 }
 
+
 function animate() {
     window.requestAnimationFrame(animate);
 
@@ -88,7 +89,9 @@ function animate() {
     c.fillRect(0, 0, canvas.width, canvas.height);
 
     //Update our entities
+    c.fillStyle = 'green';
     player.update();
+    c.fillStyle = 'red';
     enemy.update();
 
     //Default speed
@@ -114,6 +117,7 @@ function animate() {
 //Main 
 animate();
 
+
 window.addEventListener('keydown', (event) => {
 
     switch (event.key) {
@@ -126,7 +130,9 @@ window.addEventListener('keydown', (event) => {
             player.lastKey = 'a';
             break;
          case 'w':
-            player.velocity.y = -20;  
+            if (player.velocity.y == 0) {
+                player.velocity.y = -20;
+            }
             break;     
             
         case 'ArrowRight':
@@ -138,12 +144,15 @@ window.addEventListener('keydown', (event) => {
             enemy.lastKey = 'ArrowLeft';
             break;
          case 'ArrowUp':
-            enemy.velocity.y = -20;   
+            if (enemy.velocity.y == 0) {
+                enemy.velocity.y = -20;   
+            } 
             break;                
         
     }
     console.log(event.key);
 })
+
 
 window.addEventListener('keyup', (event) => {
 
