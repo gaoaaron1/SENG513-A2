@@ -1,0 +1,36 @@
+p {
+    font-size: 10px; /* Adjust the font size as needed */
+  }
+  
+  h2 {
+    font-size: 12px; /* Adjust the font size as needed */
+  }
+
+  li {
+    font-size: 10px;
+  }
+  
+
+#infoSection {
+    width: 80%;
+    margin-left: 10%;
+    background-color: antiquewhite;
+    border-radius: 10px;
+    color: black;
+    border: 2px solid black; /* Add a 2px solid black border */
+    padding: 5px;
+    margin-top: 10px;
+}
+
+#logo {
+    width: 100px; /* Adjust the width as needed */
+    height: 100px; /* Adjust the height as needed */
+    background-image: url('./assets/GameLogo.png'); /* Replace 'your-logo-image-url.png' with the path to your logo image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    left: 10px; /* Adjust the left position as needed */
+    z-index: 999; /* Ensure the logo appears above other elements */
+}
