@@ -9,16 +9,42 @@
     font-family: 'Press Start 2P', cursive;
 }
 
+.logo {
+    width: 59.07vh; /* Adjust the width as needed */
+    height: 8.15vh; /* Adjust the height as needed */
+    max-width: 1024px;
+    background-image: url('./assets/GameLogo.png'); /* Replace 'your-logo-image-url.png' with the path to your logo image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    left: 25vh; /* Adjust the left position as needed */
+    z-index: 999; /* Ensure the logo appears above other elements */
+}
+
+.body {
+    width: 1024px;
+}
+
 .screen-container {
+    margin: 0 auto;
     position: relative;
     display: inline-block;
     background: url('./assets/background.png') center no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
+    width: 100vh;
+    max-width: 1024px;
+    height: 60vh;
+    max-height: 610px;
+    overflow: hidden;
 }
 
-
 .bar-container {
-    width: 100%;
+    position: relative;
+    width: 100vh;
+    max-width: 1024px;
+    height: 10vh;
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -26,9 +52,10 @@
 }
 
 .battlefield-container {
-    width: 100%;
-    height: 100%;
-    padding: 222px;
+    position: relative;
+    width: 100vh;
+    max-width: 1024px;
+    height: 46.67vh;
     display: flex;
     justify-content: center;
 }
@@ -70,26 +97,27 @@
 
 
 .player {
+    display: flex;
+    align-items: center;
     position: relative;
-    height: 60px;
-    width: 38px;
-    top: 10vh;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    top: 25%;
     background-size: cover;
 }
 
 
 #player-1, .player1 {
-    background-image: url('./assets/player1.png');
-    left: -250px;
+    background-image: url('./assets/player1/player1_img.png');
     box-sizing: border-box;
 }
 
 #player-2, .player2 {
-    background-image: url('./assets/player2.png');
-    left: 250px;
+    background-image: url('./assets/player2/player2_img.png');
+    
     box-sizing: border-box;
 }
-
 
 
 .enemy-health {
@@ -108,4 +136,35 @@
     bottom: 0;
     left: 0;
     display: none;
+}
+
+
+.menu-container {
+    margin-top: 25vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Arrange buttons in a column within the menu-container */
+    align-items: center; /* Center buttons horizontally within the menu-container */
+}
+
+.menuBtn {
+    background-color: orange;
+    font-size: 1.875vh;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: white;
+    width: 50%;
+    height: 10vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-bottom: 1%;
+    margin-top: 10px;
+}
+
+.menuBtn:hover {
+    background-color: orangered; /* Background color on hover */
+    color: white; /* Text color on hover */
 }

@@ -1,0 +1,23 @@
+p {
+    font-size: 0.9375vh; /* 1.25vh * 0.75 = 0.9375vh */
+  }
+  
+  h2 {
+    font-size: 1.125vh; /* 1.5vh * 0.75 = 1.125vh */
+  }
+  
+  li {
+    font-size: 0.9375vh; /* 1.25vh * 0.75 = 0.9375vh */
+  }
+  
+  #infoSection {
+    width: 80%;
+    margin-left: 10%;
+    background-color: antiquewhite;
+    border-radius: 0.9375vh; /* 1.25vh * 0.75 = 0.9375vh */
+    color: black;
+    border: 0.1875vh solid black; /* 0.25vh * 0.75 = 0.1875vh */
+    padding: 0.46875vh; /* 0.625vh * 0.75 = 0.46875vh */
+    margin-top: 0.9375vh; /* 1.25vh * 0.75 = 0.9375vh */
+  }
+  
