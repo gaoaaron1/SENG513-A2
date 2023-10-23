@@ -13,8 +13,9 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/buttons.css">
     <script type="text/javascript" src="handlers.js"></script>
   </head>
 
@@ -30,26 +31,16 @@
 
         <div id="infoSection">
 
-            <!-- Target Platform Section -->
-
-            <h2 id="targetPlatformTitle">Target Platform:</h2>
-            <p>The target platform intended is <b>Desktop</b>.</p>
-
-            <!-- Game Genre Section -->
-
-            <h2>Game Genre:</h2>
-            <p>The game genre for Costume Warriors is <b>fighter</b>, and <b>strategy</b>.</p>
-
             <!-- Game's Objective Section -->
 
             <h2>Game's Objective:</h2>
             <p>Costume Warriors is a two-player game</p>
             <p>players use keyboard keys to control their character.</p>
-            <p>The objective is to kill each othe before time runs out.</p> 
+            <p>The objective is to kill each other before time runs out.</p> 
             
             <!-- Rules of the Game Section -->
 
-            <h2>Rules of the Game:</h2>
+            <h2>How To Play:</h2>
             <ul>
                 <li>Begin in a landscape map with a timer and player healthbar.</li>
                 <li>Player 1 uses 'A' key to move left, 'D' key to move right</li>
@@ -74,7 +65,8 @@
             <p>If time runs out and both players have same health, then end game in draw.</p>
 
             <!-- Start Game Section -->
-            <button id="startBtn">Start Game!</button>
+            <button id="homeBtn" class="tutorialBtn" >Back</button>
+            <button id="startBtn" class="tutorialBtn" >Start Game!</button>
         </div>
 
 

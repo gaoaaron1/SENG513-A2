@@ -7,13 +7,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <!-- Styling APIs-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    
+    <!-- css class styling sheets-->
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/buttons.css">
+    <script type="text/javascript" src="handlers.js"></script>
   </head>
 
   <body>
@@ -58,10 +66,17 @@
           <div style="background-color: black; height: 30px"></div>
           
           <!-- Create the front part of the health bar for enemy-->
-          <div id="enemyHealth" class="full-health">
-          </div>
+          <div id="enemyHealth" class="full-health"></div>
+          
         </div>
+
+        <button id="homeBtn" class="btn_Home">
         <div></div>
+
+
+          <i class="fas fa-home fa"></i> 
+        </button>
+        
       </div>
 
           <!--======================== END OF SCREEN CONTAINER ==========================-->

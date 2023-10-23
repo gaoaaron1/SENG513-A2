@@ -30,6 +30,7 @@ const player2 = new Fighter({
 });
 
 
+
   
 function rectangularCollision({ rectangle1, rectangle2 }) {
   // position rectangle1 corresponding to the attacking collision box for player 1 
@@ -97,7 +98,7 @@ function determineWinner({ player, enemy, timerId }) {
       // Check if there is a collision between the Player 2's attack box and player 1.
       // Check if enemy is in an attacking state.
       // Player 2's animation frame is at the second frame.
-      // Player 1 is hit then call takeHit() function
+  
       // Update player's health bar using a GSAP animation
       // animate player's health bar (identified by '#playerHealth') by setting its width to player's health percentage
       

@@ -13,7 +13,7 @@
     width: 59.07vh; /* Adjust the width as needed */
     height: 8.15vh; /* Adjust the height as needed */
     max-width: 1024px;
-    background-image: url('./assets/GameLogo.png'); /* Replace 'your-logo-image-url.png' with the path to your logo image */
+    background-image: url('.././assets/GameLogo.png'); /* Replace 'your-logo-image-url.png' with the path to your logo image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -31,7 +31,7 @@
     margin: 0 auto;
     position: relative;
     display: inline-block;
-    background: url('./assets/background.png') center no-repeat;
+    background: url('.././assets/background.png') center no-repeat;
     background-size: cover;
     width: 100vh;
     max-width: 1024px;
@@ -109,12 +109,12 @@
 
 
 #player-1, .player1 {
-    background-image: url('./assets/player1/player1_img.png');
+    background-image: url('.././assets/player1/player1_img.png');
     box-sizing: border-box;
 }
 
 #player-2, .player2 {
-    background-image: url('./assets/player2/player2_img.png');
+    background-image: url('.././assets/player2/player2_img.png');
     
     box-sizing: border-box;
 }
@@ -148,23 +148,4 @@
     align-items: center; /* Center buttons horizontally within the menu-container */
 }
 
-.menuBtn {
-    background-color: orange;
-    font-size: 1.875vh;
-    border: 2px solid black;
-    border-radius: 10px;
-    color: white;
-    width: 50%;
-    height: 10vh;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    margin-bottom: 1%;
-    margin-top: 10px;
-}
 
-.menuBtn:hover {
-    background-color: orangered; /* Background color on hover */
-    color: white; /* Text color on hover */
-}

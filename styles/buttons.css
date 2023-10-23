@@ -1,0 +1,65 @@
+.menuBtn {
+    background-color: orange;
+    font-size: 1.875vh;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: white;
+    width: 50%;
+    height: 10vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-bottom: 1%;
+    margin-top: 10px;
+}
+
+.menuBtn:hover {
+    background-color: orangered; /* Background color on hover */
+    color: white; /* Text color on hover */
+}
+
+.tutorialBtn {
+    background-color: orange;
+    font-size: 1vh;
+    border: 2px solid black;
+    border-radius: 10px;
+    color: white;
+    width: 25%;
+    height: 5vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-bottom: 1%;
+    margin-top: 10px;
+}
+
+.tutorialBtn:hover {
+    background-color: orangered; /* Background color on hover */
+    color: white; /* Text color on hover */
+}
+
+.btn_Home {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    background-color: orange;
+    font-size: 1vh;
+    border: 0.6vh solid white;
+    color: white;
+    
+}
+
+.btn_Home:hover {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    background-color: orangered;
+    font-size: 1vh;
+    border: 0.6vh solid white;
+    color: white;
+    
+}
+
+
