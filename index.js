@@ -23,11 +23,14 @@ class Fighter {
 
 const player1 = new Fighter({
   // properties specific to player 1
+  // I will be adding health, sprites, frames, position, etc.
 });
 
 const player2 = new Fighter({
   // properties specific to player 2
+  // I will be adding health, sprites, frames, position, etc.
 });
+
 
 
   
@@ -97,7 +100,7 @@ function determineWinner({ player, enemy, timerId }) {
       // Check if there is a collision between the Player 2's attack box and player 1.
       // Check if enemy is in an attacking state.
       // Player 2's animation frame is at the second frame.
-      // Player 1 is hit then call takeHit() function
+  
       // Update player's health bar using a GSAP animation
       // animate player's health bar (identified by '#playerHealth') by setting its width to player's health percentage
       
