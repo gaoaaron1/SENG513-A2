@@ -23,10 +23,12 @@ class Fighter {
 
 const player1 = new Fighter({
   // properties specific to player 1
+  // I will be adding health, sprites, frames, position, etc.
 });
 
 const player2 = new Fighter({
   // properties specific to player 2
+  // I will be adding health, sprites, frames, position, etc.
 });
 
 

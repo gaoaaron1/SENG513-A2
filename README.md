@@ -4,7 +4,9 @@
 
 ## GAME OVERVIEW
 
-**Target Platform**: This game is designed for desktop with two players.
+**Title**: Costume Warriors
+
+**Target Platform**: This game is designed for Desktop with two players.
 
 **Game Genre**: fighter, strategy, 2 players, retro game.
 
@@ -24,17 +26,29 @@
 
 ## Game Mechanics
 ### Player 1
+**Movement**:
 - 'a': Move left
 - 'd': Move right
+**Mobility**:
+- 'w': Jump  
+**Combat**:
 - 's': Attack
-- 'w': Jump
 
 
 ### Player 2
+**Movement**:
 - 'leftArrow': Move left
 - 'rightArrow': Move right
+**Mobility**:
 - 'upArrow': Jump
+**Combat**:
 - 'downArrow': Attack
+
+**Description**: Depending on the button that a player pressed, the character will switch states and sprites accordingly. Collision boxes will also be created when a player attacks. Each player will generate a collision box, and if it collides with the opposing player, the opposing player takes damage and lose health points. Jumping is an asthetic used for dodging the collision boxes. 
+
+**Health Points**: Players have a set number of health points. When a player's health points reach zero, they lose the game.
+
+**Interactions**: The game will feature player-to-player and player-to-environment mechanisms. Players cannot go beyond the borders of the screen and collide with one another through collision boxes.
 
 ### Instruction button: Direct to instructions page.
 ### Start button: Start the game for both players.
