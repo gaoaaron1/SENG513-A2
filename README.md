@@ -29,8 +29,10 @@
 **Movement**:
 - 'a': Move left
 - 'd': Move right
+
 **Mobility**:
 - 'w': Jump  
+
 **Combat**:
 - 's': Attack
 
@@ -39,8 +41,10 @@
 **Movement**:
 - 'leftArrow': Move left
 - 'rightArrow': Move right
+
 **Mobility**:
 - 'upArrow': Jump
+
 **Combat**:
 - 'downArrow': Attack
 
