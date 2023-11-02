@@ -101,23 +101,29 @@
     align-items: center;
     position: relative;
     justify-content: center;
-    height: 80%;
+    height: 100%;
     width: 100%;
-    top: 25%;
+    top: 30%;
     background-size: cover;
 }
 
 
 #player-1, .player1 {
-    background-image: url('.././assets/player1/player1_img.png');
+    background-image: url('.././assets/player1/player1_idle.png');
     box-sizing: border-box;
 }
 
 #player-2, .player2 {
-    background-image: url('.././assets/player2/player2_img.png');
+    background-image: url('.././assets/player2/player2_idle.png');
     
     box-sizing: border-box;
 }
+
+.attack {
+    background-image: url('.././assets/player1/player1_attack.png');
+}
+
+
 
 
 .enemy-health {

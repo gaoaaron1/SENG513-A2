@@ -7,19 +7,19 @@
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("homeBtn").addEventListener("click", function() {
-        window.location.href = "index.html";
+        window.location.href = "../pages/index.html";
     });
 });
 
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("startBtn").addEventListener("click", function() {
-        window.location.href = "game.html";
+        window.location.href = "../pages/game.html";
     });
 });
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("tutorialBtn").addEventListener("click", function() {
-        window.location.href = "tutorial.html";
+        window.location.href = "../pages/tutorial.html";
     });
 });

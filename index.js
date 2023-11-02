@@ -13,13 +13,20 @@ const player2Elements = document.getElementById("player-2");
 const battlefield = document.getElementById("battlefield-map");
 
 const gameOver = document.querySelector('#displayText');
-const gravity = 0.7;
+const gravity = 0.4;
 
 class Fighter {
-  constructor({position, velocity, element}) {
+  constructor({
+    position, 
+    velocity,  
+    element,
+    imageSrc,
+}) {
+
     this.position = position;
     this.velocity = velocity;
     this.element = element;
+    this.imageSrc = imageSrc;
     this.height = 150;
     this.lastKey;
   }
@@ -49,7 +56,48 @@ const player1 = new Fighter({
         x: 0,
         y: 0
     },
-    element: player1Elements
+    offset: {
+        x: 0,
+        y: 0
+    },
+    element: player1Elements,
+    imageSrc: './assets/player1/player1_idle.png',
+    framesMax: 8,
+    scale: 2.5,
+    offset: {
+        x: 215,
+        y: 157
+    },
+    sprites: {
+      idle: {
+        imageSrc: './assets/player1/player1_idle.png',
+        framesMax: 8
+      },
+      run: {
+        imageSrc: './assets/player1/player1_attack.png',
+        framesMax: 8
+      },
+      jump: {
+        imageSrc: './assets/player1/player1_jump.png',
+        framesMax: 2
+      },
+      fall: {
+        imageSrc: './assets/player1/player1_idle.png',
+        framesMax: 2
+      },
+      attack1: {
+        imageSrc: './assets/player1/player1_attack.png',
+        framesMax: 6
+      },
+      takeHit: {
+        imageSrc: './assets/player1/player1_hurt.png',
+        framesMax: 4
+      },
+      death: {
+        imageSrc: './assets/player1/player1_hurt.png',
+        framesMax: 6
+      }    
+    },
 });
 
 const player2 = new Fighter({
@@ -114,6 +162,7 @@ function determineWinner({ player, enemy, timerId }) {
   }
 
 
+  //Animate game
   function animate() {
     animatePlayer1();
     animatePlayer2();
@@ -205,8 +254,14 @@ function determineWinner({ player, enemy, timerId }) {
             player1.lastKey = 'a';
             break;
          case 'w':
-            player1.velocity.y = -15;  
+            if (player1.velocity.y == 0) 
+                player1.velocity.y = -12;  
             break;     
+         case 's':
+// Remove idle class
+            player1Element.element.classList.add('attack'); // Add running class 
+            console.log("CHANGE");
+            break;  
             
         case 'ArrowRight':
             keys.ArrowRight.pressed = true;
@@ -217,7 +272,8 @@ function determineWinner({ player, enemy, timerId }) {
             player2.lastKey = 'ArrowLeft';
             break;
          case 'ArrowUp':
-            player2.velocity.y = -15;   
+            if (player2.velocity.y == 0) 
+                player2.velocity.y = -12;   
             break;                
         
     }
