@@ -10,27 +10,75 @@
 
 const player1Elements = document.getElementById("player-1");
 const player2Elements = document.getElementById("player-2");
+const battlefield = document.getElementById("battlefield-map");
 
 const gameOver = document.querySelector('#displayText');
 const gravity = 0.7;
 
 class Fighter {
-  constructor(options) {
-    //I plan to add variable declarations to this constructor 
-    //Then I plan to have player 1 and player 2 take on those variables
+  constructor({position, velocity, element}) {
+    this.position = position;
+    this.velocity = velocity;
+    this.element = element;
+    this.height = 150;
+    this.lastKey;
+  }
+
+  update() {
+            //Update positions of our entity
+            //Update positions of our entity
+            this.position.x += this.velocity.x;
+            this.position.y += this.velocity.y;
+            
+            if (this.position.y + this.height + this.velocity.y >= 150) {
+                this.velocity.y = 0;
+            } else {
+                this.velocity.y += gravity;
+            }
   }
 }
 
+
+// Create a Fighter instance and associate it with the player1Elements DOM element
 const player1 = new Fighter({
-  // properties specific to player 1
-  // I will be adding health, sprites, frames, position, etc.
+    position: {
+        x: 0,
+        y: 0
+    },
+    velocity: {
+        x: 0,
+        y: 0
+    },
+    element: player1Elements
 });
 
 const player2 = new Fighter({
-  // properties specific to player 2
-  // I will be adding health, sprites, frames, position, etc.
+    position: {
+        x: 0,
+        y: 0
+    },
+    velocity: {
+        x: 0,
+        y: 0
+    },
+    element: player2Elements
 });
 
+
+const keys = {
+    a: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    },
+    ArrowRight: {
+        pressed: false
+    },
+    ArrowLeft: {
+        pressed: false
+    }
+}
 
 
   
@@ -38,56 +86,89 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
   // position rectangle1 corresponding to the attacking collision box for player 1 
   // position rectangle2 corresponding to the attacking collision box for player 2
 }
+
   
 function determineWinner({ player, enemy, timerId }) {
-  // clearTimeout(timerId)
-
-  // if player 1 health and player 2 health are equal:
-    // display tie using query selector
-  // else if player 1 health > player 2 health:
-    // display player 1 wins using query selector
-  // else if player 1 health < player 2 health:
-    // display player 2 wins using query selector
-
+    clearTimeout(timerId)
+    document.querySelector('#displayText').style.display = 'flex'
+    if (player.health === enemy.health) {
+      document.querySelector('#displayText').innerHTML = 'Tie'
+    } else if (player.health > enemy.health) {
+      document.querySelector('#displayText').innerHTML = 'Player 1 Wins'
+    } else if (player.health < enemy.health) {
+      document.querySelector('#displayText').innerHTML = 'Player 2 Wins'
+    }
 }
 
 
   function decreaseTimer() {
-    // if timer > 0: (Check if timer greater than 0)
-      // timerId stores identifier for timer
-      // Set a timer with a 1000ms (1 second) delay
-      // time should decrease by 1 every second.
+    if (timer > 0) {
+        timerId = setTimeout(decreaseTimer, 1000)
+        timer--
+        document.querySelector('#timer').innerHTML = timer
+      }
+    
+      if (timer === 0) {
+        determineWinner({ player, enemy, timerId })
+      }
   }
 
+
   function animate() {
-    // updates player 1 position
-    // updates player 2 position
-
-    // set player 1 x velocity to 0
-    // set player 2 x velocity to 0
-
-    /*=========================== Player 1 Movement ========================*/
-    // if ('A' or 'a' key is pressed and player1.lastkey is 'a' or 'A'):
-          // player 1 velocity of x is -5;
-          // player 1 swaps sprite to 'run'
-
-    // if ('D' or 'd' key is pressed and player1.lastkey is 'd' or 'D'):
-          // player 1 velocity of x is -5;
-          // player 1 swaps sprite to 'run'     
-    // else: 
-          // player 1 swaps sprite to idle     
+    animatePlayer1();
+    animatePlayer2();
+  }
 
 
-    /*=========================== Player 2 Movement ========================*/          
-    // if (left arrow key is pressed and player2.lastkey is 'arrowLeft'):
-          // player 2 velocity of x is -5;
-          // player 2 swaps sprite to 'run'
 
-    // if (right arrow key is pressed and player2.lastkey is 'arrowRight'):
-          // player 2 velocity of x is -5;
-          // player 2 swaps sprite to 'run'     
-    // else: 
-          // player 2 swaps sprite to idle     
+  function animatePlayer1() {
+    player1.update();
+  
+    // Player 1 Movement
+    if (keys.a.pressed && player1.lastKey === 'a') {
+      player1.velocity.x = -2;
+    } else if (keys.d.pressed && player1.lastKey === 'd') {
+      player1.velocity.x = 2;
+    } else {
+      player1.velocity.x = 0; // No key is pressed, stop the player
+    }
+
+    // Player 1 Jumping
+    //if (player.velocity.y < 0) {
+        //player.switchSprite('jump')
+    //} else if (player.velocity.y > 0) {
+        //player.switchSprite('fall')
+    //}
+
+  
+    // Update the position of the associated DOM element 
+    player1.element.style.transform = `translate(${player1.position.x}px, ${player1.position.y}px)`;
+  
+    
+    requestAnimationFrame(animatePlayer1);
+  }
+  
+  function animatePlayer2() {
+    player2.update();
+  
+    if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {
+      player2.velocity.x = -2;
+    } else if (keys.ArrowRight.pressed && player2.lastKey === 'ArrowRight') {
+      player2.velocity.x = 2;
+    } else {
+      player2.velocity.x = 0; // No key is pressed, stop the player
+    }
+  
+    // Update the position of the associated DOM element
+    player2.element.style.transform = `translate(${player2.position.x}px, ${player2.position.y}px)`;
+  
+    requestAnimationFrame(animatePlayer2);
+  }
+  
+  // Start the animation for player1 and player2
+  requestAnimationFrame(animatePlayer1);
+  requestAnimationFrame(animatePlayer2);
+          
 
     /*=========================== Jump Movement ========================*/          
     // if player 1 and player 2 velocity is less than 0 
@@ -105,60 +186,72 @@ function determineWinner({ player, enemy, timerId }) {
       // animate player's health bar (identified by '#playerHealth') by setting its width to player's health percentage
       
     
-  }
+  
 
+
+
+  
 
   /*============================= KEYBOARD LISTENERS ======================== */
   window.addEventListener('keydown', (event) => {
-    // if user 1 is not dead:
 
-      // switch (event.key) {
-          // if press a or A:           
-            // move player 1 left       
-
-          // if press d or D:           
-            // move player 1 right      
-
-          // if press w or W:                                   
-            // player 1 jumps using velocity shift in y direction
-
-          // if press s or S:
-            // call player 1 attack function
-
-        // if user 2 is not dead: 
-
-          // if press left arrow key:
-            // move player 2 left
-
-          // if press right arrow key:
-            // move player 2 right
-
-          // if press up arrow key:
-            // player 2 jumps using velocity shift in y direction
-
-          // if press down arrow key:
-            // call player 2 attack function 
-      // }
-
-    })
+    switch (event.key) {
+        case 'd':
+            keys.d.pressed = true;
+            player1.lastKey = 'd';
+            break;
+        case 'a':
+            keys.a.pressed = true;
+            player1.lastKey = 'a';
+            break;
+         case 'w':
+            player1.velocity.y = -15;  
+            break;     
+            
+        case 'ArrowRight':
+            keys.ArrowRight.pressed = true;
+            player2.lastKey = 'ArrowRight';
+            break;
+        case 'ArrowLeft':
+            keys.ArrowLeft.pressed = true;
+            player2.lastKey = 'ArrowLeft';
+            break;
+         case 'ArrowUp':
+            player2.velocity.y = -15;   
+            break;                
+        
+    }
+    console.log(event.key);
+})
 
   
   window.addEventListener('keyup', (event) => {
-    // switch (event.key) {
-          // if released d or D:           
-            // player 1 stops moving right  
-        
-          // if released a or A:          
-            // player 1 stops moving left  
-    // }
-  
-    // enemy keys
-    // switch (event.key) {
-          // if released right arrow:          
-            // player 2 stops moving right  
-        
-          // if released left arrow:            
-            // player 2 stops moving left  
-    // }
+    switch (event.key) {
+        case 'd':
+            keys.d.pressed = false;
+            break;
+        case 'a':
+            keys.a.pressed = false;
+            break;
+        case 'w':
+            keys.w.pressed = false;
+            break;            
+    }
+
+    switch (event.key) {
+        case 'ArrowRight':
+            keys.ArrowRight.pressed = false;
+            break;
+        case 'ArrowLeft':
+            keys.ArrowLeft.pressed = false;
+            break;
+        case 'ArrowUp':
+            keys.ArrowUp.pressed = false;
+            break;            
+    }
+    console.log(event.key);
   })
   
+  //============================ MAIN METHOD =======================//
+  decreaseTimer();
+  animate();
