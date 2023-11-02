@@ -5,8 +5,6 @@
 /* UCID: 30056912 */
   
   /*===================================== VARIABLES ===================================== */
-  let timer = 30;
-  let timerId;
 
 const player1Elements = document.getElementById("player-1");
 const player2Elements = document.getElementById("player-2");
@@ -15,6 +13,8 @@ const rectangle1 = document.getElementById("rectangle1");
 const rectangle2 = document.getElementById("rectangle2");
 const gameOver = document.querySelector('#displayText');
 const gravity = 0.4;
+let timer = 30;
+let timerId;
 
 class Fighter {
   constructor({position, velocity,  element, offset, imageSrc}) {
@@ -146,20 +146,21 @@ function rectangularCollision({rectangle1, rectangle2}) {
 
 
   
-function determineWinner({ player, enemy, timerId }) {
+function determineWinner({ player1, player2, timerId }) {
     clearTimeout(timerId)
-    document.querySelector('#displayText').style.display = 'flex'
-    if (player.health === enemy.health) {
-      document.querySelector('#displayText').innerHTML = 'Tie'
-    } else if (player.health > enemy.health) {
-      document.querySelector('#displayText').innerHTML = 'Player 1 Wins'
-    } else if (player.health < enemy.health) {
-      document.querySelector('#displayText').innerHTML = 'Player 2 Wins'
+    document.querySelector('#displayText').style.display = 'flex';
+    if (player1.health === player2.health) {
+      document.querySelector('#displayText').innerHTML = 'Draw';
+    } else if (player1.health > player2.health) {
+      document.querySelector('#displayText').innerHTML = 'Player 1 Wins';
+    } else if (player1.health < player2.health) {
+      document.querySelector('#displayText').innerHTML = 'Player 2 Wins';
     }
 }
 
 
   function decreaseTimer() {
+    
     if (timer > 0) {
         timerId = setTimeout(decreaseTimer, 1000)
         timer--
@@ -167,7 +168,7 @@ function determineWinner({ player, enemy, timerId }) {
       }
     
       if (timer === 0) {
-        determineWinner({ player, enemy, timerId })
+        determineWinner({ player1, player2, timerId })
       }
   }
 
@@ -177,8 +178,10 @@ function determineWinner({ player, enemy, timerId }) {
   /*===================================================== ANIMATE GAME =============================================================== */
   //Animate game
   function animate() {
+
     animatePlayer1();
     animatePlayer2();
+
   }
 
 
@@ -209,9 +212,11 @@ function determineWinner({ player, enemy, timerId }) {
             document.querySelector('#player2Health').style.background = 'red'; // Change background color to yellow
         }        
 
-        console.log('player 1 attack');
     }
-
+        //End game based on health
+        if (player1.health <= 0 || player2.health <= 0) {
+            determineWinner({player1, player2, timerId});
+        }
 
     // Update the position of the associated DOM element 
     player1.element.style.transform = `translate(${player1.position.x}px, ${player1.position.y}px)`;
@@ -252,10 +257,14 @@ function determineWinner({ player, enemy, timerId }) {
 
         if (player1.health < 30) {
             document.querySelector('#player1Health').style.background = 'red'; // Change background color to yellow
-        }       
+        }   
+            
     }        
-  
 
+            //End game based on health
+            if (player1.health <= 0 || player2.health <= 0) {
+                determineWinner({player1, player2, timerId});
+            }
 
     // Update the position of the associated DOM element
     player2.element.style.transform = `translate(${player2.position.x}px, ${player2.position.y}px)`;    
