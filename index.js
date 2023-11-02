@@ -30,6 +30,7 @@ class Entity {
         }
         this.color = color;
         this.isAttacking;
+        this.health = 100;
     }
 
     draw() {
@@ -165,14 +166,16 @@ function animate() {
     // detect for player 1 attack player 2 collision
     if (rectangularCollision({rectangle1: player, rectangle2: enemy}) && (player.isAttacking)) {
         player.isAttacking = false;
-        console.log('player 1 attack');
+        enemy.health -= 20;
+        document.querySelector('#enemyHealth').style.width = enemy.health + '%';
     }
 
     // detect for player 2 attack player 1 collision
     if (rectangularCollision({rectangle1: enemy, rectangle2: player}) && (enemy.isAttacking)) {
         enemy.isAttacking = false;
-        console.log('player 2 attack');
-    }    
+        player.health -= 20;
+        document.querySelector('#playerHealth').style.width = player.health + '%';
+    }
 }
 
 
