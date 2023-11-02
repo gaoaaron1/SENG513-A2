@@ -30,13 +30,13 @@
       <div class="bar-container">
         
         <!------ Player Health Bar ------------>
-        <div class="player-health">
+        <div class="player1-health">
 
           <!-- Create the back part of the health bar for player-->
           <div style="background-color: black; height: 30px; width: 100%"></div>
           
           <!-- Create the front part of the health bar for player-->
-          <div id="playerHealth" class="full-health">
+          <div id="player1Health" class="full-health">
           </div>
         </div>
   
@@ -56,13 +56,13 @@
         "
       >
 
-        <!------ Enemy Health Bar ------->
+        <!------ Player 2 Health Bar ------->
 
-          <!-- Create the back part of the health bar for enemy-->
+          <!-- Create the back part of the health bar for player 2-->
           <div style="background-color: black; height: 30px"></div>
           
-          <!-- Create the front part of the health bar for enemy-->
-          <div id="enemyHealth" class="full-health"></div>
+          <!-- Create the front part of the health bar for player 2-->
+          <div id="player2Health" class="full-health"></div>
           
         </div>
 
@@ -79,6 +79,9 @@
 
           <!---- ================ START OF BATTLEFIELD CONTAINER ====================== -->
           <div class="battlefield-container" id="battlefield-map">
+
+            <div id="rectangle1" class="rectangle"></div>
+            <div id="rectangle2" class="rectangle"></div>
 
               <div class="player" id="player-1"></div>
             
