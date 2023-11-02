@@ -13,7 +13,6 @@ const player2Elements = document.getElementById("player-2");
 const battlefield = document.getElementById("battlefield-map");
 const rectangle1 = document.getElementById("rectangle1");
 const rectangle2 = document.getElementById("rectangle2");
-
 const gameOver = document.querySelector('#displayText');
 const gravity = 0.4;
 
@@ -37,6 +36,7 @@ class Fighter {
         height: 50,
     }
     this.isAttacking;
+    this.health = 100;
   }
 
   draw() {
@@ -172,6 +172,9 @@ function determineWinner({ player, enemy, timerId }) {
   }
 
 
+
+
+  /*===================================================== ANIMATE GAME =============================================================== */
   //Animate game
   function animate() {
     animatePlayer1();
@@ -179,7 +182,7 @@ function determineWinner({ player, enemy, timerId }) {
   }
 
 
-
+  //---------------------------------------------------- Player 1 features ------------------------------------//
   function animatePlayer1() {
     player1.update(); 
   
@@ -192,10 +195,20 @@ function determineWinner({ player, enemy, timerId }) {
       player1.velocity.x = 0; // No key is pressed, stop the player
     }
 
-
     // detect for player 1 attack player 2 collision
     if (rectangularCollision({rectangle1: player1, rectangle2: player2}) && (player1.isAttacking)) {
         player1.isAttacking = false;
+        player2.health -= 10;
+        document.querySelector('#player2Health').style.width = player2.health + '%';
+        
+        if (player2.health < 70) {
+            document.querySelector('#player2Health').style.background = '#fdb44b'; // Change background color to yellow
+        }
+
+        if (player2.health < 30) {
+            document.querySelector('#player2Health').style.background = 'red'; // Change background color to yellow
+        }        
+
         console.log('player 1 attack');
     }
 
@@ -210,12 +223,12 @@ function determineWinner({ player, enemy, timerId }) {
     } else {
         rectangle1.style.display = 'none';
     }
-
   
-    
     requestAnimationFrame(animatePlayer1);
   }
   
+
+  //---------------------------------- Player 2 features -------------------------------------//
   function animatePlayer2() {
     player2.update();
   
@@ -230,11 +243,19 @@ function determineWinner({ player, enemy, timerId }) {
     // detect for player 2 attack player 1 collision
     if (rectangularCollision({rectangle1: player2, rectangle2: player1}) && (player2.isAttacking)) {
         player2.isAttacking = false;
-        console.log('player 2 attack');
+        player1.health -= 10;
+        document.querySelector('#player1Health').style.width = player1.health + '%';
+
+        if (player1.health < 70) {
+            document.querySelector('#player1Health').style.background = '#fdb44b'; // Change background color to yellow
+        }
+
+        if (player1.health < 30) {
+            document.querySelector('#player1Health').style.background = 'red'; // Change background color to yellow
+        }       
     }        
   
-    
-    //console.log("Rectangle 2 position is:" + player2.position.x);
+
 
     // Update the position of the associated DOM element
     player2.element.style.transform = `translate(${player2.position.x}px, ${player2.position.y}px)`;    
