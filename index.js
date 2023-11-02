@@ -11,38 +11,73 @@
 const player1Elements = document.getElementById("player-1");
 const player2Elements = document.getElementById("player-2");
 const battlefield = document.getElementById("battlefield-map");
+const rectangle1 = document.getElementById("rectangle1");
+const rectangle2 = document.getElementById("rectangle2");
 
 const gameOver = document.querySelector('#displayText');
 const gravity = 0.4;
 
 class Fighter {
-  constructor({
-    position, 
-    velocity,  
-    element,
-    imageSrc,
-}) {
+  constructor({position, velocity,  element, offset, imageSrc}) {
 
     this.position = position;
     this.velocity = velocity;
     this.element = element;
+    this.width = 50;
+    this.height = 100;
     this.imageSrc = imageSrc;
-    this.height = 150;
     this.lastKey;
+    this.attackBox = {
+        position: {
+            x: this.position.x,
+            y: this.position.y
+        },
+        offset,
+        width: 100,
+        height: 50,
+    }
+    this.isAttacking;
   }
 
-  update() {
-            //Update positions of our entity
-            //Update positions of our entity
-            this.position.x += this.velocity.x;
-            this.position.y += this.velocity.y;
-            
-            if (this.position.y + this.height + this.velocity.y >= 150) {
-                this.velocity.y = 0;
-            } else {
-                this.velocity.y += gravity;
-            }
+  draw() {
+        // attack box
+        if (this.isAttacking) {
+            c.fillStyle = 'red'
+            c.fillRect(
+            this.attackBox.position.x, 
+            this.attackBox.position.y, 
+            this.attackBox.width, 
+            this.attackBox.height
+            );
+        }    
   }
+
+    update() {       
+
+
+        //Create attack box
+        this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
+        this.attackBox.position.y = this.position.y;
+
+        //Update positions of our entity
+        //Update positions of our entity
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+            
+        if (this.position.y + this.height + this.velocity.y >= 150) {
+            this.velocity.y = 0;
+        } else {
+            this.velocity.y += gravity;
+        }
+    }
+
+    attack() {
+        this.isAttacking = true;
+
+        setTimeout(() => {
+            this.isAttacking = false;
+        }, 100)
+    }    
 }
 
 
@@ -60,44 +95,7 @@ const player1 = new Fighter({
         x: 0,
         y: 0
     },
-    element: player1Elements,
-    imageSrc: './assets/player1/player1_idle.png',
-    framesMax: 8,
-    scale: 2.5,
-    offset: {
-        x: 215,
-        y: 157
-    },
-    sprites: {
-      idle: {
-        imageSrc: './assets/player1/player1_idle.png',
-        framesMax: 8
-      },
-      run: {
-        imageSrc: './assets/player1/player1_attack.png',
-        framesMax: 8
-      },
-      jump: {
-        imageSrc: './assets/player1/player1_jump.png',
-        framesMax: 2
-      },
-      fall: {
-        imageSrc: './assets/player1/player1_idle.png',
-        framesMax: 2
-      },
-      attack1: {
-        imageSrc: './assets/player1/player1_attack.png',
-        framesMax: 6
-      },
-      takeHit: {
-        imageSrc: './assets/player1/player1_hurt.png',
-        framesMax: 4
-      },
-      death: {
-        imageSrc: './assets/player1/player1_hurt.png',
-        framesMax: 6
-      }    
-    },
+    element: player1Elements
 });
 
 const player2 = new Fighter({
@@ -109,6 +107,10 @@ const player2 = new Fighter({
         x: 0,
         y: 0
     },
+    offset: {
+        x: -50,
+        y: 0
+    },    
     element: player2Elements
 });
 
@@ -129,11 +131,19 @@ const keys = {
 }
 
 
-  
-function rectangularCollision({ rectangle1, rectangle2 }) {
-  // position rectangle1 corresponding to the attacking collision box for player 1 
-  // position rectangle2 corresponding to the attacking collision box for player 2
+
+
+
+//Used for detecting collisions among our two players  
+function rectangularCollision({rectangle1, rectangle2}) {
+    return (
+        rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x && 
+        rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
+        rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
+    )
 }
+
 
   
 function determineWinner({ player, enemy, timerId }) {
@@ -171,7 +181,7 @@ function determineWinner({ player, enemy, timerId }) {
 
 
   function animatePlayer1() {
-    player1.update();
+    player1.update(); 
   
     // Player 1 Movement
     if (keys.a.pressed && player1.lastKey === 'a') {
@@ -182,16 +192,25 @@ function determineWinner({ player, enemy, timerId }) {
       player1.velocity.x = 0; // No key is pressed, stop the player
     }
 
-    // Player 1 Jumping
-    //if (player.velocity.y < 0) {
-        //player.switchSprite('jump')
-    //} else if (player.velocity.y > 0) {
-        //player.switchSprite('fall')
-    //}
 
-  
+    // detect for player 1 attack player 2 collision
+    if (rectangularCollision({rectangle1: player1, rectangle2: player2}) && (player1.isAttacking)) {
+        player1.isAttacking = false;
+        console.log('player 1 attack');
+    }
+
+
     // Update the position of the associated DOM element 
     player1.element.style.transform = `translate(${player1.position.x}px, ${player1.position.y}px)`;
+
+    //display attack for player 1
+    if (player1.isAttacking) {
+        rectangle1.style.display = 'block';
+        rectangle1.style.transform = `translate(${player1.attackBox.position.x+50}px, ${player1.attackBox.position.y}px)`;
+    } else {
+        rectangle1.style.display = 'none';
+    }
+
   
     
     requestAnimationFrame(animatePlayer1);
@@ -207,10 +226,27 @@ function determineWinner({ player, enemy, timerId }) {
     } else {
       player2.velocity.x = 0; // No key is pressed, stop the player
     }
+
+    // detect for player 2 attack player 1 collision
+    if (rectangularCollision({rectangle1: player2, rectangle2: player1}) && (player2.isAttacking)) {
+        player2.isAttacking = false;
+        console.log('player 2 attack');
+    }        
   
+    
+    //console.log("Rectangle 2 position is:" + player2.position.x);
+
     // Update the position of the associated DOM element
-    player2.element.style.transform = `translate(${player2.position.x}px, ${player2.position.y}px)`;
+    player2.element.style.transform = `translate(${player2.position.x}px, ${player2.position.y}px)`;    
   
+    
+    //Display attacking for player 2
+    if (player2.isAttacking) {
+        rectangle2.style.display = 'block';
+        rectangle2.style.transform = `translate(${player2.attackBox.position.x}px, ${player2.attackBox.position.y}px)`;
+    } else {
+        rectangle2.style.display = 'none';
+    }
     requestAnimationFrame(animatePlayer2);
   }
   
@@ -258,9 +294,7 @@ function determineWinner({ player, enemy, timerId }) {
                 player1.velocity.y = -12;  
             break;     
          case 's':
-// Remove idle class
-            player1Element.element.classList.add('attack'); // Add running class 
-            console.log("CHANGE");
+            player1.attack();
             break;  
             
         case 'ArrowRight':
@@ -275,9 +309,11 @@ function determineWinner({ player, enemy, timerId }) {
             if (player2.velocity.y == 0) 
                 player2.velocity.y = -12;   
             break;                
-        
+        case 'ArrowDown':
+            player2.attack();
+            break;         
     }
-    console.log(event.key);
+
 })
 
   
@@ -288,10 +324,7 @@ function determineWinner({ player, enemy, timerId }) {
             break;
         case 'a':
             keys.a.pressed = false;
-            break;
-        case 'w':
-            keys.w.pressed = false;
-            break;            
+            break;        
     }
 
     switch (event.key) {
@@ -300,12 +333,9 @@ function determineWinner({ player, enemy, timerId }) {
             break;
         case 'ArrowLeft':
             keys.ArrowLeft.pressed = false;
-            break;
-        case 'ArrowUp':
-            keys.ArrowUp.pressed = false;
-            break;            
+            break;        
     }
-    console.log(event.key);
+
   })
   
   //============================ MAIN METHOD =======================//
