@@ -33,7 +33,13 @@ const player = new Entity({
         x: 0,
         y: 0
     },
-    color: 'green'
+    imageSrc: './assets/samuraiMack/idle.png',
+    framesMax: 8,
+    scale: 2.5,
+    offset: {
+        x: 215,
+        y: 157
+    }
 })
 
 //Create player
@@ -83,7 +89,7 @@ function animate() {
 
     //Update our entities
     player.update();
-    enemy.update();
+    //enemy.update();
 
     //Default speed
     player.velocity.x = 0;
