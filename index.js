@@ -16,70 +16,6 @@ const gravity = 0.4;
 let timer = 30;
 let timerId;
 
-class Fighter {
-  constructor({position, velocity,  element, offset, imageSrc}) {
-
-    this.position = position;
-    this.velocity = velocity;
-    this.element = element;
-    this.width = 50;
-    this.height = 100;
-    this.imageSrc = imageSrc;
-    this.lastKey;
-    this.attackBox = {
-        position: {
-            x: this.position.x,
-            y: this.position.y
-        },
-        offset,
-        width: 100,
-        height: 50,
-    }
-    this.isAttacking;
-    this.health = 100;
-  }
-
-  draw() {
-        // attack box
-        if (this.isAttacking) {
-            c.fillStyle = 'red'
-            c.fillRect(
-            this.attackBox.position.x, 
-            this.attackBox.position.y, 
-            this.attackBox.width, 
-            this.attackBox.height
-            );
-        }    
-  }
-
-    update() {       
-
-
-        //Create attack box
-        this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
-        this.attackBox.position.y = this.position.y;
-
-        //Update positions of our entity
-        //Update positions of our entity
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-            
-        if (this.position.y + this.height + this.velocity.y >= 150) {
-            this.velocity.y = 0;
-        } else {
-            this.velocity.y += gravity;
-        }
-    }
-
-    attack() {
-        this.isAttacking = true;
-
-        setTimeout(() => {
-            this.isAttacking = false;
-        }, 100)
-    }    
-}
-
 
 // Create a Fighter instance and associate it with the player1Elements DOM element
 const player1 = new Fighter({
@@ -131,7 +67,7 @@ const keys = {
 }
 
 
-
+//==================================== METHODS =======================================//
 
 
 //Used for detecting collisions among our two players  
@@ -145,7 +81,7 @@ function rectangularCollision({rectangle1, rectangle2}) {
 }
 
 
-  
+//Used for determining winner  
 function determineWinner({ player1, player2, timerId }) {
     clearTimeout(timerId)
     document.querySelector('#displayText').style.display = 'flex';
@@ -158,7 +94,7 @@ function determineWinner({ player1, player2, timerId }) {
     }
 }
 
-
+    //Used for decrementing time every second
   function decreaseTimer() {
     
     if (timer > 0) {
@@ -175,7 +111,7 @@ function determineWinner({ player1, player2, timerId }) {
 
 
 
-  /*===================================================== ANIMATE GAME =============================================================== */
+  /*===================================================== ANIMATE GAME FUNCTIONS =============================================================== */
   //Animate game
   function animate() {
 
@@ -283,24 +219,6 @@ function determineWinner({ player1, player2, timerId }) {
   // Start the animation for player1 and player2
   requestAnimationFrame(animatePlayer1);
   requestAnimationFrame(animatePlayer2);
-          
-
-    /*=========================== Jump Movement ========================*/          
-    // if player 1 and player 2 velocity is less than 0 
-      // player swaps sprite to jump
-
-    // if player 1 and player 2 velocity is greater than 0
-      // player swaps sprite to fall  
-      
-    /*=========================== Detect Collision ========================*/
-      // Check if there is a collision between the Player 2's attack box and player 1.
-      // Check if enemy is in an attacking state.
-      // Player 2's animation frame is at the second frame.
-  
-      // Update player's health bar using a GSAP animation
-      // animate player's health bar (identified by '#playerHealth') by setting its width to player's health percentage
-      
-    
   
 
 
@@ -369,5 +287,6 @@ function determineWinner({ player1, player2, timerId }) {
   })
   
   //============================ MAIN METHOD =======================//
+  
   decreaseTimer();
   animate();
