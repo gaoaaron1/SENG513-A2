@@ -100,35 +100,42 @@
 /* ======================================= PLAYER PROPERTIES ================================*/
 .player {
     position: absolute;
-    width: 50px;
-    height: 100px;    
-    top: 25vh;
+    width: 400px;
+    height: 400px;    
+    top: 0vh;
     background-size: cover; /* Adjust this value as needed */
+
 }
 
 
 #player-1, .player1 {
     background-image: url('.././assets/player1/player1_idle.png');
-    background-color: green;
     box-sizing: border-box;
 }
+
+@keyframes idleAnimation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 3200px 0;
+    }
+}
+
 
 #player-2, .player2 {
-    background-image: url('.././assets/player2/player2_idle.png');
-    background-color: red;    
+    background-image: url('.././assets/player2/player2_idle.png');  
     box-sizing: border-box;
 }
 
-.attack {
-    background-image: url('.././assets/player1/player1_attack.png');
-}
+
 
 
 .rectangle {
-    width: 100px;
+    width: 125px;
     height: 50px;
     top: 25vh;
-    background-color: blue;
+    /*background-color: blue;*/
     position: absolute; /* You may need to adjust the positioning method */
 }
 

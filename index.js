@@ -20,7 +20,7 @@ let timerId;
 // Create a Fighter instance and associate it with the player1Elements DOM element
 const player1 = new Fighter({
     position: {
-        x: 0,
+        x: -200,
         y: 0
     },
     velocity: {
@@ -31,12 +31,13 @@ const player1 = new Fighter({
         x: 0,
         y: 0
     },
+    imageUrl: '../assets/player1/player1',    
     element: player1Elements
 });
 
 const player2 = new Fighter({
     position: {
-        x: 0,
+        x: 200,
         y: 0
     },
     velocity: {
@@ -47,6 +48,7 @@ const player2 = new Fighter({
         x: -50,
         y: 0
     },    
+    imageUrl: '../assets/player2/player2',    
     element: player2Elements
 });
 
@@ -127,12 +129,45 @@ function determineWinner({ player1, player2, timerId }) {
   
     // Player 1 Movement
     if (keys.a.pressed && player1.lastKey === 'a') {
-      player1.velocity.x = -2;
+
+      if (player1.position.x >= -320) {
+        player1.velocity.x = -2;
+      } else {
+        player1.velocity.x = 0;
+      } 
+      
+      player1.switchSprite("dash");
+
     } else if (keys.d.pressed && player1.lastKey === 'd') {
-      player1.velocity.x = 2;
+
+        if (player1.position.x <= 330) {
+            player1.velocity.x = 2;
+        } else {
+            player1.velocity.x = 0;
+        }
+      player1.switchSprite("dash");
+
     } else {
-      player1.velocity.x = 0; // No key is pressed, stop the player
+
+        player1.velocity.x = 0; // No key is pressed, stop the player
+        if (player1.animateAttack) {
+            player1.switchSprite("attack");
+        } else {
+            player1.switchSprite("idle");
+        }
     }
+
+    // jumping
+    if (player1.velocity.y < 0) {
+        if (player1.animateAttack) {
+            player1.switchSprite("attack");
+        } else {
+            player1.switchSprite('jump');
+        }
+    } else if (player1.velocity.y > 0) {
+        player1.switchSprite('idle');
+    }
+
 
     // detect for player 1 attack player 2 collision
     if (rectangularCollision({rectangle1: player1, rectangle2: player2}) && (player1.isAttacking)) {
@@ -173,13 +208,47 @@ function determineWinner({ player1, player2, timerId }) {
   function animatePlayer2() {
     player2.update();
   
-    if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {
-      player2.velocity.x = -2;
+    // movement
+    if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {        
+        
+        if (player2.position.x >= -320) {
+            player2.velocity.x = -2;
+        } else {
+            player2.velocity.x = 0;
+        }        
+        player2.switchSprite("dash");  
+
     } else if (keys.ArrowRight.pressed && player2.lastKey === 'ArrowRight') {
-      player2.velocity.x = 2;
+        
+        if (player2.position.x <= 330) {
+            player2.velocity.x = 2;
+        } else {
+            player2.velocity.x = 0;
+        }
+        player2.switchSprite("dash");    
+
     } else {
-      player2.velocity.x = 0; // No key is pressed, stop the player
+
+        player2.velocity.x = 0; // No key is pressed, stop the player
+        if (player2.animateAttack) {
+            player2.switchSprite("attack");
+        } else {
+            player2.switchSprite("idle");
+        }
     }
+
+    // jumping
+    if (player2.velocity.y < 0) {
+
+        if (player2.animateAttack) {
+            player2.switchSprite("attack");
+        } else {
+            player2.switchSprite('jump');
+        }
+    } else if (player2.velocity.y > 0) {
+        player2.switchSprite('idle');
+    }    
+
 
     // detect for player 2 attack player 1 collision
     if (rectangularCollision({rectangle1: player2, rectangle2: player1}) && (player2.isAttacking)) {
@@ -213,9 +282,13 @@ function determineWinner({ player1, player2, timerId }) {
     } else {
         rectangle2.style.display = 'none';
     }
+
     requestAnimationFrame(animatePlayer2);
   }
   
+
+
+
   // Start the animation for player1 and player2
   requestAnimationFrame(animatePlayer1);
   requestAnimationFrame(animatePlayer2);
@@ -231,15 +304,16 @@ function determineWinner({ player1, player2, timerId }) {
     switch (event.key) {
         case 'd':
             keys.d.pressed = true;
-            player1.lastKey = 'd';
+            player1.lastKey = 'd';           
             break;
         case 'a':
             keys.a.pressed = true;
             player1.lastKey = 'a';
             break;
          case 'w':
-            if (player1.velocity.y == 0) 
-                player1.velocity.y = -12;  
+            if (player1.velocity.y == 0) {
+                player1.velocity.y = -12;
+            }
             break;     
          case 's':
             player1.attack();
@@ -247,18 +321,18 @@ function determineWinner({ player1, player2, timerId }) {
             
         case 'ArrowRight':
             keys.ArrowRight.pressed = true;
-            player2.lastKey = 'ArrowRight';
+            player2.lastKey = 'ArrowRight';            
             break;
         case 'ArrowLeft':
             keys.ArrowLeft.pressed = true;
-            player2.lastKey = 'ArrowLeft';
+            player2.lastKey = 'ArrowLeft';          
             break;
          case 'ArrowUp':
             if (player2.velocity.y == 0) 
-                player2.velocity.y = -12;   
+                player2.velocity.y = -12;
             break;                
         case 'ArrowDown':
-            player2.attack();
+            player2.attack();           
             break;         
     }
 
@@ -266,6 +340,7 @@ function determineWinner({ player1, player2, timerId }) {
 
   
   window.addEventListener('keyup', (event) => {
+
     switch (event.key) {
         case 'd':
             keys.d.pressed = false;
@@ -275,7 +350,7 @@ function determineWinner({ player1, player2, timerId }) {
             break;        
     }
 
-    switch (event.key) {
+    switch (event.key) {      
         case 'ArrowRight':
             keys.ArrowRight.pressed = false;
             break;
