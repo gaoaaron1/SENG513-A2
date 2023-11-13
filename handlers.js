@@ -1,6 +1,6 @@
 /* Course: SENG 513 */
-/* Date: OCT 18, 2023 */
-/* Assignment 1 */
+/* Date: NOV 12, 2023 */
+/* Assignment 3 */
 /* Name: Aaron Gao */
 /* UCID: 30056912 */
 

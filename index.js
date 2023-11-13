@@ -1,6 +1,6 @@
 /* Course: SENG 513 */
-/* Date: OCT 18, 2023 */
-/* Assignment 2 */
+/* Date: NOV 12, 2023 */
+/* Assignment 3 */
 /* Name: Aaron Gao */
 /* UCID: 30056912 */
   
@@ -15,7 +15,7 @@ const gameOver = document.querySelector('#displayText');
 const gravity = 0.4;
 let timer = 30;
 let timerId;
-
+let endGame = false;
 
 
 // Create a Fighter instance and associate it with the player1Elements DOM element
@@ -109,6 +109,7 @@ function determineWinner({ player1, player2, timerId }) {
     
       if (timer === 0) {
         determineWinner({ player1, player2, timerId })
+        endGame = true;
       }
   }
 
@@ -339,7 +340,7 @@ function animate() {
 
   /*============================= KEYBOARD LISTENERS ======================== */
   window.addEventListener('keydown', (event) => {
-    if ((!player1.dead) && (!player2.dead)) {
+    if ((!player1.dead) && (!player2.dead) && (!endGame)) {
         switch (event.key) {
             case 'd':
                 keys.d.pressed = true;
@@ -379,7 +380,7 @@ function animate() {
 
   
   window.addEventListener('keyup', (event) => {
-    if ((!player1.dead) && (!player2.dead)) {
+    if ((!player1.dead) && (!player2.dead) && (!endGame)) {
     switch (event.key) {
         case 'd':
             keys.d.pressed = false;

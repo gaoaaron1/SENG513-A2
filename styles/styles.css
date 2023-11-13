@@ -1,6 +1,6 @@
 /* Course: SENG 513 */
-/* Date: OCT 18, 2023 */
-/* Assignment 2 */
+/* Date: NOV 12, 2023 */
+/* Assignment 3 */
 /* Name: Aaron Gao */
 /* UCID: 30056912 */
 
@@ -71,7 +71,7 @@
 
 .full-health {
     position: absolute;
-    background: #00bbf0;
+    background: #3CE5DD;
     top: 0;
     right: 0;
     bottom: 0;
@@ -101,9 +101,10 @@
 /* ======================================= PLAYER PROPERTIES ================================*/
 .player {
     position: absolute;
-    width: 400px;
-    height: 400px;    
-    top: 0vh;
+    width: 60vh;
+    height: 60vh;    
+    max-width: 400px;
+    top: 1vh;
     background-size: cover; /* Adjust this value as needed */
 
 }
@@ -119,7 +120,7 @@
         background-position: 0 0;
     }
     100% {
-        background-position: 3200px 0;
+        background-position: 480vh 0;
     }
 }
 
@@ -128,7 +129,7 @@
         background-position: 0 0;
     }
     100% {
-        background-position: 6400px 0;
+        background-position: 960vh 0;
     }
 }
 
@@ -137,7 +138,7 @@
         background-position: 0 0;
     }
     100% {
-        background-position: 5600px 0;
+        background-position: 840vh 0;
     }
     
 }

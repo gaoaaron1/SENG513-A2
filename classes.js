@@ -1,3 +1,8 @@
+/* Course: SENG 513 */
+/* Date: NOV 12, 2023 */
+/* Assignment 3 */
+/* Name: Aaron Gao */
+/* UCID: 30056912 */
 
   class Fighter {
     constructor({position, velocity, element, offset, imageUrl}) {
