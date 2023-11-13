@@ -17,6 +17,7 @@ let timer = 30;
 let timerId;
 
 
+
 // Create a Fighter instance and associate it with the player1Elements DOM element
 const player1 = new Fighter({
     position: {
@@ -87,6 +88,7 @@ function rectangularCollision({rectangle1, rectangle2}) {
 function determineWinner({ player1, player2, timerId }) {
     clearTimeout(timerId)
     document.querySelector('#displayText').style.display = 'flex';
+    
     if (player1.health === player2.health) {
       document.querySelector('#displayText').innerHTML = 'Draw';
     } else if (player1.health > player2.health) {
@@ -115,66 +117,88 @@ function determineWinner({ player1, player2, timerId }) {
 
   /*===================================================== ANIMATE GAME FUNCTIONS =============================================================== */
   //Animate game
-  function animate() {
-
-    animatePlayer1();
-    animatePlayer2();
-
+// Animate game
+function animate() {
+    animatePlayer(player1);
+    animatePlayer(player2);
   }
 
 
   //---------------------------------------------------- Player 1 features ------------------------------------//
   function animatePlayer1() {
+    
+    
     player1.update(); 
-  
+
+    
+    if ((player1.animateHit === false) && (!player1.dead)) {
+
     // Player 1 Movement
     if (keys.a.pressed && player1.lastKey === 'a') {
 
-      if (player1.position.x >= -320) {
-        player1.velocity.x = -2;
-      } else {
-        player1.velocity.x = 0;
-      } 
-      
-      player1.switchSprite("dash");
-
-    } else if (keys.d.pressed && player1.lastKey === 'd') {
-
-        if (player1.position.x <= 330) {
-            player1.velocity.x = 2;
+        if (player1.position.x >= -320) {
+          player1.velocity.x = -2;
         } else {
-            player1.velocity.x = 0;
-        }
-      player1.switchSprite("dash");
+          player1.velocity.x = 0;
+        } 
+        
+        player1.switchSprite("dash");
+  
+      } else if (keys.d.pressed && player1.lastKey === 'd') {
+  
+          if (player1.position.x <= 330) {
+              player1.velocity.x = 2;
+          } else {
+              player1.velocity.x = 0;
+          }
+        player1.switchSprite("dash");
+  
+      } else {
+  
+          player1.velocity.x = 0; // No key is pressed, stop the player
+          if (player1.animateAttack) {
+              player1.switchSprite("attack");
+          } else {
+              player1.switchSprite("idle");
+          }
+      }
+  
+      // jumping
+      if (player1.velocity.y > 0) {
+          if (player1.animateAttack) {
+              player1.switchSprite("attack");
+          } else {
+              player1.switchSprite('jump');
+          }
+      } else if (player1.velocity.y < 0) {
+          player1.switchSprite('idle');
+      }
+  
 
     } else {
 
-        player1.velocity.x = 0; // No key is pressed, stop the player
-        if (player1.animateAttack) {
-            player1.switchSprite("attack");
+        if (player1.health <= 0) {
+            player1.switchSprite("death");
+            
         } else {
-            player1.switchSprite("idle");
+            player1.switchSprite("hurt");
         }
+        
     }
 
-    // jumping
-    if (player1.velocity.y < 0) {
-        if (player1.animateAttack) {
-            player1.switchSprite("attack");
-        } else {
-            player1.switchSprite('jump');
-        }
-    } else if (player1.velocity.y > 0) {
-        player1.switchSprite('idle');
-    }
+    
 
 
     // detect for player 1 attack player 2 collision
     if (rectangularCollision({rectangle1: player1, rectangle2: player2}) && (player1.isAttacking)) {
+        
         player1.isAttacking = false;
-        player2.health -= 10;
+        player2.takeHit();
+
         document.querySelector('#player2Health').style.width = player2.health + '%';
         
+        
+
         if (player2.health < 70) {
             document.querySelector('#player2Health').style.background = '#fdb44b'; // Change background color to yellow
         }
@@ -206,54 +230,69 @@ function determineWinner({ player1, player2, timerId }) {
 
   //---------------------------------- Player 2 features -------------------------------------//
   function animatePlayer2() {
+
     player2.update();
-  
-    // movement
-    if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {        
-        
-        if (player2.position.x >= -320) {
-            player2.velocity.x = -2;
-        } else {
-            player2.velocity.x = 0;
-        }        
-        player2.switchSprite("dash");  
+    
+    if (player2.animateHit === false && !player2.dead) {
+    
+        // movement
+        if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {        
+            
+            if (player2.position.x >= -320) {
+                player2.velocity.x = -2;
+            } else {
+                player2.velocity.x = 0;
+            }        
+            player2.switchSprite("dash");  
 
-    } else if (keys.ArrowRight.pressed && player2.lastKey === 'ArrowRight') {
-        
-        if (player2.position.x <= 330) {
-            player2.velocity.x = 2;
+        } else if (keys.ArrowRight.pressed && player2.lastKey === 'ArrowRight') {
+            
+            if (player2.position.x <= 330) {
+                player2.velocity.x = 2;
+            } else {
+                player2.velocity.x = 0;
+            }
+            player2.switchSprite("dash");    
+
         } else {
-            player2.velocity.x = 0;
+
+            player2.velocity.x = 0; // No key is pressed, stop the player
+            if (player2.animateAttack) {
+                player2.switchSprite("attack");
+            } else {
+                player2.switchSprite("idle");
+            }
         }
-        player2.switchSprite("dash");    
 
+        // jumping
+        if (player2.velocity.y > 0) {
+
+            // override jump if player 2 is attacking
+            if (player2.animateAttack) {
+                player2.switchSprite("attack");
+            } else {
+                player2.switchSprite('jump');
+            }
+
+        } else if (player2.velocity.y < 0) {
+            player2.switchSprite('idle');
+        }    
     } else {
-
-        player2.velocity.x = 0; // No key is pressed, stop the player
-        if (player2.animateAttack) {
-            player2.switchSprite("attack");
+        if (player2.health <= 0) {
+            player2.switchSprite("death");
+            
         } else {
-            player2.switchSprite("idle");
+            player2.switchSprite("hurt");
         }
-    }
-
-    // jumping
-    if (player2.velocity.y < 0) {
-
-        if (player2.animateAttack) {
-            player2.switchSprite("attack");
-        } else {
-            player2.switchSprite('jump');
-        }
-    } else if (player2.velocity.y > 0) {
-        player2.switchSprite('idle');
-    }    
+    }  
 
 
     // detect for player 2 attack player 1 collision
     if (rectangularCollision({rectangle1: player2, rectangle2: player1}) && (player2.isAttacking)) {
+    
         player2.isAttacking = false;
-        player1.health -= 10;
+        player1.takeHit();
+
         document.querySelector('#player1Health').style.width = player1.health + '%';
 
         if (player1.health < 70) {
@@ -300,47 +339,47 @@ function determineWinner({ player1, player2, timerId }) {
 
   /*============================= KEYBOARD LISTENERS ======================== */
   window.addEventListener('keydown', (event) => {
-
-    switch (event.key) {
-        case 'd':
-            keys.d.pressed = true;
-            player1.lastKey = 'd';           
-            break;
-        case 'a':
-            keys.a.pressed = true;
-            player1.lastKey = 'a';
-            break;
-         case 'w':
-            if (player1.velocity.y == 0) {
-                player1.velocity.y = -12;
-            }
-            break;     
-         case 's':
-            player1.attack();
-            break;  
-            
-        case 'ArrowRight':
-            keys.ArrowRight.pressed = true;
-            player2.lastKey = 'ArrowRight';            
-            break;
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = true;
-            player2.lastKey = 'ArrowLeft';          
-            break;
-         case 'ArrowUp':
-            if (player2.velocity.y == 0) 
-                player2.velocity.y = -12;
-            break;                
-        case 'ArrowDown':
-            player2.attack();           
-            break;         
+    if ((!player1.dead) && (!player2.dead)) {
+        switch (event.key) {
+            case 'd':
+                keys.d.pressed = true;
+                player1.lastKey = 'd';           
+                break;
+            case 'a':
+                keys.a.pressed = true;
+                player1.lastKey = 'a';
+                break;
+            case 'w':
+                if (player1.velocity.y == 0) {
+                    player1.velocity.y = -12;
+                }
+                break;     
+            case 's':
+                player1.attack();
+                break;  
+                
+            case 'ArrowRight':
+                keys.ArrowRight.pressed = true;
+                player2.lastKey = 'ArrowRight';            
+                break;
+            case 'ArrowLeft':
+                keys.ArrowLeft.pressed = true;
+                player2.lastKey = 'ArrowLeft';          
+                break;
+            case 'ArrowUp':
+                if (player2.velocity.y == 0) 
+                    player2.velocity.y = -12;
+                break;                
+            case 'ArrowDown':
+                player2.attack();           
+                break;         
+        }
     }
-
 })
 
   
   window.addEventListener('keyup', (event) => {
-
+    if ((!player1.dead) && (!player2.dead)) {
     switch (event.key) {
         case 'd':
             keys.d.pressed = false;
@@ -358,7 +397,7 @@ function determineWinner({ player1, player2, timerId }) {
             keys.ArrowLeft.pressed = false;
             break;        
     }
-
+    }
   })
   
   //============================ MAIN METHOD =======================//
