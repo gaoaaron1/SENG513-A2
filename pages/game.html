@@ -24,7 +24,6 @@
 
   <body>
 
-    <audio autoplay src="../assets/mozart.mp3"></audio>
 
 
 
@@ -35,7 +34,7 @@
       <!-- Container used to fill the health bars -->
       <div class="bar-container">
         
-        <!------ Player Health Bar ------------>
+        <!------ Player 1 Health Bar ------------>
         <div class="player1-health">
 
           <!-- Create the back part of the health bar for player-->
@@ -53,14 +52,8 @@
           30
         </div>
 
-        <div style="
-          position: relative;
-          width: 100%;
-          border-top: 4px solid white;
-          border-bottom: 4px solid white;
-          border-right: 4px solid white;
-        "
-      >
+        <!-- Player 2 Health Bar -->
+        <div class="player2-health">
 
         <!------ Player 2 Health Bar ------->
 
@@ -68,16 +61,17 @@
           <div style="background-color: black; height: 30px"></div>
           
           <!-- Create the front part of the health bar for player 2-->
-          <div id="player2Health" class="full-health"></div>
-          
+          <div id="player2Health" class="full-health"></div>    
+        
         </div>
 
-        <button id="homeBtn" class="btn_Home">
-        <div></div>
+      <!--------------  Home Button   ------------->
+        <div class="home-container">
+
+          <button id="homeBtn" class="btn_Home" style="height: 30px"> <i class="fas fa-home fa" style="height: 20px"></i> </button>
+        </div>
 
 
-          <i class="fas fa-home fa"></i> 
-        </button>
         
       </div>
 
@@ -86,12 +80,18 @@
           <!---- ================ START OF BATTLEFIELD CONTAINER ====================== -->
           <div class="battlefield-container" id="battlefield-map">
 
-            <div id="rectangle1" class="rectangle"></div>
-            <div id="rectangle2" class="rectangle"></div>
-
+            <div class="player-container">
+              <div id="rectangle1" class="rectangle"></div>
               <div class="player" id="player-1"></div>
+            </div>
             
+
+            <div class="player-container">
+              <div id="rectangle2" class="rectangle"></div>
               <div class="player" id="player-2"></div>
+            </div>
+            
+
             
           </div>
       

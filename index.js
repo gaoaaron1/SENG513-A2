@@ -17,11 +17,30 @@ let timer = 30;
 let timerId;
 let endGame = false;
 
+// Additional code for playing audio
+const audio = new Audio('../assets/WesternTheme.wav');
+
+const gruntAudio1 = new Audio('../assets/grunt1.wav'); // Replace with the correct path to your grunt sound effect file
+
+const gruntAudio2 = new Audio('../assets/grunt2.wav');
+
+function playGruntAudio1() {
+    gruntAudio1.play();
+}
+
+function playGruntAudio2() {
+    gruntAudio2.play();
+}
+
+
+function playAudio() {
+    audio.play();
+  }
 
 // Create a Fighter instance and associate it with the player1Elements DOM element
 const player1 = new Fighter({
     position: {
-        x: -200,
+        x: -300,
         y: 0
     },
     velocity: {
@@ -38,7 +57,7 @@ const player1 = new Fighter({
 
 const player2 = new Fighter({
     position: {
-        x: 200,
+        x: 300,
         y: 0
     },
     velocity: {
@@ -136,8 +155,7 @@ function animate() {
 
     // Player 1 Movement
     if (keys.a.pressed && player1.lastKey === 'a') {
-
-        if (player1.position.x >= -320) {
+        if (player1.position.x >= -300) {
           player1.velocity.x = -2;
         } else {
           player1.velocity.x = 0;
@@ -147,7 +165,7 @@ function animate() {
   
       } else if (keys.d.pressed && player1.lastKey === 'd') {
   
-          if (player1.position.x <= 330) {
+          if (player1.position.x <= 500) {
               player1.velocity.x = 2;
           } else {
               player1.velocity.x = 0;
@@ -239,7 +257,7 @@ function animate() {
         // movement
         if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {        
             
-            if (player2.position.x >= -320) {
+            if (player2.position.x >= -500) {
                 player2.velocity.x = -2;
             } else {
                 player2.velocity.x = 0;
@@ -340,6 +358,8 @@ function animate() {
 
   /*============================= KEYBOARD LISTENERS ======================== */
   window.addEventListener('keydown', (event) => {
+
+    playAudio();
     if ((!player1.dead) && (!player2.dead) && (!endGame)) {
         switch (event.key) {
             case 'd':
@@ -357,6 +377,7 @@ function animate() {
                 break;     
             case 's':
                 player1.attack();
+                playGruntAudio1();
                 break;  
                 
             case 'ArrowRight':
@@ -372,7 +393,8 @@ function animate() {
                     player2.velocity.y = -12;
                 break;                
             case 'ArrowDown':
-                player2.attack();           
+                player2.attack();  
+                playGruntAudio2();         
                 break;         
         }
     }
@@ -401,6 +423,7 @@ function animate() {
     }
   })
   
+
   //============================ MAIN METHOD =======================//
   
   decreaseTimer();
