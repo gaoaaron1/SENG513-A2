@@ -1,6 +1,8 @@
-# SENG 513 Assignment 2
+# SENG 513 Assignment 3
 **Author**: Aaron Gao
 **UCID**: 30056912
+
+Date: Nov 12
 
 ## GAME OVERVIEW
 
