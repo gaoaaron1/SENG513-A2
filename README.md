@@ -262,6 +262,21 @@ The timer will be going through subsequent until it reaches 0. Players with high
 their health points are equivalent we will end the game in a draw.
 
 
+## Citations:
 
+The material I took is open sourced
 
+1. Player 1 grunt sound effects grunt1.wav:
+[a link](https://freesound.org/people/F.M.Audio/sounds/695378/)
 
+2. Player 2 grunt sound effects grunt2.wav:
+[a link](https://freesound.org/people/Nox_Sound/sounds/474651/)
+
+3. Background music in combat WesternTheme.wav:
+[a link](https://freesound.org/people/humanoide9000/sounds/699748/)
+
+4. Unused background music PeaceTheme.mp3:
+[a link](https://freesound.org/people/Migfus20/sounds/586838/)
+
+5. Tree Sprite:
+[a link](https://www.dlf.pt/ddownload/iixomxb_dry-grass-clipart-sprite-2d-tree-sprite-png/)
