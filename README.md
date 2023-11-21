@@ -262,6 +262,5 @@ The timer will be going through subsequent until it reaches 0. Players with high
 their health points are equivalent we will end the game in a draw.
 
 
-
-
+End of Assignment 2 README.md
 
